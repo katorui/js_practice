@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="style.css">
+     <title>imagemodal</title>
+</head>
+<body>
+     <button >前へ</button>
+     <button>次へ</button>
+     <div class="top_contents">
+          <img src="img/test.jpeg" id="top_content" data-image="1">
+     </div>
+     <div class="contents_wrapper">
+          <div class="modal-contents">
+               <img src="img/test.jpeg" data-image="1" id="first_content" class="thumbnail">
+          </div>
+          <div class="modal-contents">
+               <img src="img/megane.png" data-image="2" id="second_content" class="thumbnail">
+          </div>
+          <div class="modal-contents">
+               <img src="img/pien_woman.png"  data-image="3" id="third_content" class="thumbnail">
+          </div>
+          <div class="modal-contents">
+               <img src="img/boy_sad.png" data-image="4" id="fource_content" class="thumbnail">
+          </div>
+     </div>
+
+     <script>
+          // const top_image = document.getElementById('top_content');
+          // const image1 = document.getElementById('first_content');
+          // const image2 = document.getElementById('second_content');
+          // const image3 = document.getElementById('third_content');
+          // const image4 = document.getElementById('fource_content');
+
+          // image1.addEventListener('click', function () {
+          //      top_image.src = image1.src
+          // });
+
+          // image2.addEventListener('click', function () {
+          //      top_image.src = image2.src
+          // });
+
+          // image3.addEventListener('click', function () {
+          //      top_image.src = image3.src
+          // });
+
+          // image4.addEventListener('click', function () {
+          //      top_image.src = image4.src
+          // });
+
+
+          const top_image = document.getElementById('top_content');
+          const thumbnails = document.querySelectorAll('.thumbnail');
+          console.log(thumbnails)
+          thumbnails.forEach(function (thumbnail) {
+               thumbnail.addEventListener('click', function () {
+                    console.log(this.dataset.image)
+                    top_image.src = this.src
+                    top_image. dataset.image = this.dataset.image
+               })
+          })
+          // console.log(window)
+
+     </script>
+</body>
+</html>

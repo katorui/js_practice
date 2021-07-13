@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="style.css">
+     <title>imagemodal</title>
+     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+     <button id="prev">前へ</button>
+     <button id="next">次へ</button>
+     <button id="get">GET</button>
+     <button id="post">POST</button>
+     <div id="content">こんにちは</div>
+
+     <div class="top_contents">
+          <img src="img/test.jpeg" id="top_content" data-image="0">
+     </div>
+     <div class="contents_wrapper">
+          <div class="modal_contents">
+               <img src="img/computer_boy.png" data-image="1" id="first_content" class="thumbnail">
+          </div>
+          <div class="modal_contents">
+               <img src="img/megane.png" data-image="2" id="second_content" class="thumbnail">
+          </div>
+          <div class="modal_contents">
+               <img src="img/pien_woman.png" data-image="3" id="third_content" class="thumbnail">
+          </div>
+          <div class="modal_contents">
+               <img src="img/boy_sad.png" data-image="4" id="fource_content" class="thumbnail">
+          </div>
+     </div>
+
+     <script>
+
+          const top_image = document.getElementById('top_content');
+          const modal = document.querySelectorAll('.thumbnail');
+          const prev = document.getElementById('prev');
+          const next = document.getElementById('next');
+          const modal_content = document.querySelectorAll('.modal_contents');
+          // console.log(modal_content[3])
+
+
+          modal.forEach(function (thumbnail) {
+               thumbnail.addEventListener('click', function () {
+                    top_image.src = this.src
+                    top_image.dataset.image = this.dataset.image
+               })
+          })
+
+
+          // 次へをクリックしたらtop-contentの次のsrcに入れ替える
+          // 次へ
+          next.addEventListener('click', function () {
+               let next_content = parseInt(top_image.dataset.image)
+               next_content ++;
+               top_image.dataset.image = next_content
+               let now = modal[top_image.dataset.image - 1];
+               top_image.src = now.src;
+          })
+          // 前へ
+          prev.addEventListener('click', function () {
+               let next_content = parseInt(top_image.dataset.image)
+               next_content--;
+               top_image.dataset.image = next_content
+               let now = modal[top_image.dataset.image - 1];
+               top_image.src = now.src;
+               })
+
+// 非同期get
+          // const get = document.getElementById('get')
+          // get.addEventListener('click', function () {
+          //      // console.log(get)
+          //      const xhr = new XMLHttpRequest();
+          //      xhr.open("GET", "get.php?name=pettis&age=26", true);
+          //      xhr.onload = function (e) {
+          //           if (xhr.readyState === 4) {
+          //                if (xhr.status === 200) {
+          //                     let content = document.getElementById('content')
+          //                     top_image.src = xhr.responseText
+          //                     content.innerText = xhr.responseText
+          //                     console.log(xhr.responseText);
+          //                } else {
+          //                     console.error(xhr.statusText);
+          //                }
+          //           }
+          //      };
+          //      xhr.onerror = function (e) {
+          //           console.error(xhr.statusText);
+          //      };
+          //      xhr.send(null);
+          // })
+
+
+     get.addEventListener('click', function () {
+     $.ajax({
+          type: 'GET', // HTTPリクエストメソッドの指定
+          url: 'get.php', // 送信先URLの指定
+          async: true, // 非同期通信フラグの指定
+          dataType: 'html', // 受信するデータタイプの指定
+          data: {
+               // name: 'pettis'
+          }
+     })
+          .done(function (data) {
+               // 通信が成功したときの処理
+               console.log('aaa')
+               console.log(top_image.src)
+          })
+          .fail(function () {
+          // 通信が失敗したときの処理
+               console.log('bbb')
+          })
+          .always(function () {
+               // 通信が完了したときの処理
+               console.log('ccc')
+               console.log(name)
+          })
+     })
+
+
+// 非同期post
+          const post_button = document.getElementById('post')
+          post_button.addEventListener('click', function () {
+
+               // XHRの宣言
+               const XHR = new XMLHttpRequest();
+               // openメソッドにPOSTを指定して送信先のURLを指定します
+               XHR.open("POST", "post.php", true);
+               //リクエストに従って正しいヘッダー情報を送信してください
+               XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+               // サーバの応答をonreadystatechangeイベントで検出して正常終了したらデータを取得する
+               XHR.onreadystatechange = function () {
+                    if (XHR.readyState == 4 && XHR.status == 200) {
+                         // POST送信した結果を表示する
+                         content.innerHTML = XHR.responseText;
+                    }
+               };
+               XHR.send("name=kunshi");
+          })
+
+     </script>
+</body>
+</html>
