@@ -49,48 +49,47 @@
                })
           })
 
-
-          // 次へをクリックしたらtop-contentの次のsrcに入れ替える
-          // 次へ
+          // 次へボタン
           next.addEventListener('click', function () {
-               let next_content = parseInt(top_image.dataset.image)
-               next_content ++;
-               top_image.dataset.image = next_content
-               let now = modal[top_image.dataset.image - 1];
-               top_image.src = now.src;
+               let num = parseInt(top_image.dataset.image)
+               num ++;
+               top_image.dataset.image = num
+               let next_content = modal[top_image.dataset.image - 1]
+               top_image.src = next_content.src
           })
           // 前へ
           prev.addEventListener('click', function () {
-               let next_content = parseInt(top_image.dataset.image)
-               next_content--;
-               top_image.dataset.image = next_content
-               let now = modal[top_image.dataset.image - 1];
-               top_image.src = now.src;
+               let prev_content = parseInt(top_image.dataset.image)
+               console.log(prev_content)
+               // next_content--;
+               // top_image.dataset.image = next_content
+               // let now = modal[top_image.dataset.image - 1];
+               // top_image.src = now.src;
                })
 
 // 非同期get
-          // const get = document.getElementById('get')
-          // get.addEventListener('click', function () {
-          //      // console.log(get)
-          //      const xhr = new XMLHttpRequest();
-          //      xhr.open("GET", "get.php?name=pettis&age=26", true);
-          //      xhr.onload = function (e) {
-          //           if (xhr.readyState === 4) {
-          //                if (xhr.status === 200) {
-          //                     let content = document.getElementById('content')
-          //                     top_image.src = xhr.responseText
-          //                     content.innerText = xhr.responseText
-          //                     console.log(xhr.responseText);
-          //                } else {
-          //                     console.error(xhr.statusText);
-          //                }
-          //           }
-          //      };
-          //      xhr.onerror = function (e) {
-          //           console.error(xhr.statusText);
-          //      };
-          //      xhr.send(null);
-          // })
+          const get = document.getElementById('get')
+          get.addEventListener('click', function () {
+               // console.log(get)
+               const xhr = new XMLHttpRequest();
+               xhr.open("GET", "get.php?name=pettis&age=26", true);
+               xhr.onload = function (e) {
+                    if (xhr.readyState === 4) {
+                         if (xhr.status === 200) {
+                              let content = document.getElementById('content')
+                              // top_image.src = xhr.responseText
+                              content.innerText = xhr.responseText
+                              console.log(xhr.responseText);
+                         } else {
+                              console.error(xhr.statusText);
+                         }
+                    }
+               };
+               xhr.onerror = function (e) {
+                    console.error(xhr.statusText);
+               };
+               xhr.send(null);
+          })
 
 
      get.addEventListener('click', function () {
@@ -100,22 +99,21 @@
           async: true, // 非同期通信フラグの指定
           dataType: 'html', // 受信するデータタイプの指定
           data: {
-               // name: 'pettis'
+               name: 'pettis',
+               age: 26
           }
      })
           .done(function (data) {
                // 通信が成功したときの処理
-               console.log('aaa')
-               console.log(top_image.src)
+               console.log('a')
           })
           .fail(function () {
           // 通信が失敗したときの処理
-               console.log('bbb')
+               console.log('b')
           })
           .always(function () {
                // 通信が完了したときの処理
-               console.log('ccc')
-               console.log(name)
+               console.log('c')
           })
      })
 
