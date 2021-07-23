@@ -123,6 +123,13 @@
                          div_id.innerHTML = data['id'];
                          div_name.innerHTML = data['name'];
                          div_age.innerHTML = data['age'];
+                         // それぞれの要素にstyle追加
+                         div_id.style.color = "red"
+                         div_name.style.color = "red"
+                         div_age.style.color = "red"
+                         div_id.style.fontSize = "150%"
+                         div_name.style.fontSize = "150%"
+                         div_age.style.fontSize = "150%"
                          // それぞれdiv_dataの子要素として配置
                          div_data.insertBefore(div_id, div_data.firstChild);
                          div_data.insertBefore(div_name, div_data.secondChild);
@@ -131,7 +138,7 @@
                          // 元の要素のhtmlを作成した要素のhtmlと入れ替える
                          content.innerHTML = div_data.innerHTML
                          // div_data.style.color = 'red'
-                         console.log(div_data)
+                         // console.log(div_data)
                          // console.log(content)
                          // console.log(data['img'])
                          // console.log(img)
