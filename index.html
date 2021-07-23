@@ -13,6 +13,7 @@
      <button id="get">GET</button>
      <button id="post">POST</button>
      <div id="content">こんにちは</div>
+     <div id="img">画像に変更</div>
 
      <div class="top_contents">
           <img src="img/test.jpeg" id="top_content" data-image="0">
@@ -52,7 +53,7 @@
           // 次へボタン
           next.addEventListener('click', function () {
                let num = parseInt(top_image.dataset.image)
-               num ++;
+               num++;
                top_image.dataset.image = num
                let next_content = modal[top_image.dataset.image - 1]
                top_image.src = next_content.src
@@ -65,60 +66,92 @@
                // top_image.dataset.image = next_content
                // let now = modal[top_image.dataset.image - 1];
                // top_image.src = now.src;
-               })
+          })
 
-// 非同期get
+          // 非同期get
           const get = document.getElementById('get')
+          // get.addEventListener('click', function () {
+          //      // console.log(get)
+          //      const xhr = new XMLHttpRequest();
+          //      xhr.open("GET", "get.php?name=pettis&age=26", true);
+          //      xhr.onload = function (e) {
+          //           if (xhr.readyState === 4) {
+          //                if (xhr.status === 200) {
+          //                     let content = document.getElementById('content')
+          //                     // top_image.src = xhr.responseText
+          //                     content.innerText = xhr.responseText
+          //                     console.log(xhr.responseText);
+          //                } else {
+          //                     console.error(xhr.statusText);
+          //                }
+          //           }
+          //      };
+          //      xhr.onerror = function (e) {
+          //           console.error(xhr.statusText);
+          //      };
+          //      xhr.send(null);
+          // })
+
+
           get.addEventListener('click', function () {
-               // console.log(get)
-               const xhr = new XMLHttpRequest();
-               xhr.open("GET", "get.php?name=pettis&age=26", true);
-               xhr.onload = function (e) {
-                    if (xhr.readyState === 4) {
-                         if (xhr.status === 200) {
-                              let content = document.getElementById('content')
-                              // top_image.src = xhr.responseText
-                              content.innerText = xhr.responseText
-                              console.log(xhr.responseText);
-                         } else {
-                              console.error(xhr.statusText);
-                         }
+               $.ajax({
+                    type: 'GET', // HTTPリクエストメソッドの指定
+                    url: 'get.php', // 送信先URLの指定
+                    async: true, // 非同期通信フラグの指定
+                    dataType: 'json', // 受信するデータタイプの指定
+                    data: {
+                         name: 'pettis',
+                         age: 26
                     }
-               };
-               xhr.onerror = function (e) {
-                    console.error(xhr.statusText);
-               };
-               xhr.send(null);
+               })
+                    .done(function (data) {
+                         // 通信が成功したときの処理
+                         // console.log('a')
+                         let content = document.getElementById('content')
+                         let img = document.getElementById('img')
+                         // div要素作成
+                         let div_data = document.createElement('div');
+                         let div_id = document.createElement('div');
+                         let div_name = document.createElement('div');
+                         let div_age = document.createElement('div');
+                         // id属性追加
+                         div_data.setAttribute("id", "div_data")
+                         div_id.setAttribute("id","div_id")
+                         div_name.setAttribute("id","div_name")
+                         div_age.setAttribute("id","div_age")
+                         // htmlにajaxで送られた値を追加
+                         div_id.innerHTML = data['id'];
+                         div_name.innerHTML = data['name'];
+                         div_age.innerHTML = data['age'];
+                         // それぞれdiv_dataの子要素として配置
+                         div_data.insertBefore(div_id, div_data.firstChild);
+                         div_data.insertBefore(div_name, div_data.secondChild);
+                         div_data.insertBefore(div_age, div_data.thirdChild);
+                         // console.log(div_data)
+                         // 元の要素のhtmlを作成した要素のhtmlと入れ替える
+                         content.innerHTML = div_data.innerHTML
+                         // div_data.style.color = 'red'
+                         console.log(div_data)
+                         // console.log(content)
+                         // console.log(data['img'])
+                         // console.log(img)
+                         // div.id = 'id';
+                         // div.innerHTML = data['id'];
+                         // img.appendChild(div);
+                         // console.log(div)
+                    })
+                    .fail(function () {
+                         // 通信が失敗したときの処理
+                         console.log('b')
+                    })
+                    .always(function () {
+                         // 通信が完了したときの処理
+                         // console.log('c')
+                    })
           })
 
 
-     get.addEventListener('click', function () {
-     $.ajax({
-          type: 'GET', // HTTPリクエストメソッドの指定
-          url: 'get.php', // 送信先URLの指定
-          async: true, // 非同期通信フラグの指定
-          dataType: 'html', // 受信するデータタイプの指定
-          data: {
-               name: 'pettis',
-               age: 26
-          }
-     })
-          .done(function (data) {
-               // 通信が成功したときの処理
-               console.log('a')
-          })
-          .fail(function () {
-          // 通信が失敗したときの処理
-               console.log('b')
-          })
-          .always(function () {
-               // 通信が完了したときの処理
-               console.log('c')
-          })
-     })
-
-
-// 非同期post
+          // 非同期post
           const post_button = document.getElementById('post')
           post_button.addEventListener('click', function () {
 
