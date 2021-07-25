@@ -13,7 +13,14 @@
      <button id="get">GET</button>
      <button id="post">POST</button>
      <div id="content">こんにちは</div>
+     <div id="content2" class="hidden">
+          <div id="div_id" class="human"></div>
+          <div id="div_name" class="human"></div>
+          <div id="div_age" class="human"></div>
+     </div>
+
      <div id="img">画像に変更</div>
+
 
      <div class="top_contents">
           <img src="img/test.jpeg" id="top_content" data-image="0">
@@ -62,37 +69,10 @@
           prev.addEventListener('click', function () {
                let prev_content = parseInt(top_image.dataset.image)
                console.log(prev_content)
-               // next_content--;
-               // top_image.dataset.image = next_content
-               // let now = modal[top_image.dataset.image - 1];
-               // top_image.src = now.src;
           })
 
           // 非同期get
           const get = document.getElementById('get')
-          // get.addEventListener('click', function () {
-          //      // console.log(get)
-          //      const xhr = new XMLHttpRequest();
-          //      xhr.open("GET", "get.php?name=pettis&age=26", true);
-          //      xhr.onload = function (e) {
-          //           if (xhr.readyState === 4) {
-          //                if (xhr.status === 200) {
-          //                     let content = document.getElementById('content')
-          //                     // top_image.src = xhr.responseText
-          //                     content.innerText = xhr.responseText
-          //                     console.log(xhr.responseText);
-          //                } else {
-          //                     console.error(xhr.statusText);
-          //                }
-          //           }
-          //      };
-          //      xhr.onerror = function (e) {
-          //           console.error(xhr.statusText);
-          //      };
-          //      xhr.send(null);
-          // })
-
-
           get.addEventListener('click', function () {
                $.ajax({
                     type: 'GET', // HTTPリクエストメソッドの指定
@@ -106,46 +86,22 @@
                })
                     .done(function (data) {
                          // 通信が成功したときの処理
-                         // console.log('a')
+                         console.log(data)
                          let content = document.getElementById('content')
+                         let content2 = document.getElementById('content2')
+                         let div_id = document.getElementById('div_id')
+                         let div_name = document.getElementById('div_name')
+                         let div_age = document.getElementById('div_age')
                          let img = document.getElementById('img')
-                         // div要素作成
-                         let div_data = document.createElement('div');
-                         let div_id = document.createElement('div');
-                         let div_name = document.createElement('div');
-                         let div_age = document.createElement('div');
-                         // id属性追加
-                         div_data.setAttribute("id", "div_data")
-                         div_id.setAttribute("id","div_id")
-                         div_name.setAttribute("id","div_name")
-                         div_age.setAttribute("id","div_age")
-                         // htmlにajaxで送られた値を追加
+
                          div_id.innerHTML = data['id'];
                          div_name.innerHTML = data['name'];
                          div_age.innerHTML = data['age'];
-                         // それぞれの要素にstyle追加
-                         div_id.style.color = "red"
-                         div_name.style.color = "red"
-                         div_age.style.color = "red"
-                         div_id.style.fontSize = "150%"
-                         div_name.style.fontSize = "150%"
-                         div_age.style.fontSize = "150%"
-                         // それぞれdiv_dataの子要素として配置
-                         div_data.insertBefore(div_id, div_data.firstChild);
-                         div_data.insertBefore(div_name, div_data.secondChild);
-                         div_data.insertBefore(div_age, div_data.thirdChild);
-                         // console.log(div_data)
-                         // 元の要素のhtmlを作成した要素のhtmlと入れ替える
-                         content.innerHTML = div_data.innerHTML
-                         // div_data.style.color = 'red'
-                         // console.log(div_data)
-                         // console.log(content)
-                         // console.log(data['img'])
-                         // console.log(img)
-                         // div.id = 'id';
-                         // div.innerHTML = data['id'];
-                         // img.appendChild(div);
-                         // console.log(div)
+                         console.log(div_id)
+                         console.log(div_name)
+                         console.log(div_age)
+                         content.classList.add('hidden');
+                         content2.classList.remove('hidden');
                     })
                     .fail(function () {
                          // 通信が失敗したときの処理
@@ -161,22 +117,31 @@
           // 非同期post
           const post_button = document.getElementById('post')
           post_button.addEventListener('click', function () {
-
                // XHRの宣言
                const XHR = new XMLHttpRequest();
-               // openメソッドにPOSTを指定して送信先のURLを指定します
+               // openメソッドにPOSTを指定して送信先のURLを指定
                XHR.open("POST", "post.php", true);
                //リクエストに従って正しいヘッダー情報を送信してください
                XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
+               XHR.responseType = 'json';
                // サーバの応答をonreadystatechangeイベントで検出して正常終了したらデータを取得する
                XHR.onreadystatechange = function () {
                     if (XHR.readyState == 4 && XHR.status == 200) {
                          // POST送信した結果を表示する
-                         content.innerHTML = XHR.responseText;
+                         img.classList.add('hidden');
+                         top_image.src = XHR.response.img
+                         // console.log(XHR.response.img)
+                         // console.log(top_image)
+                         // content.innerHTML = XHR.responseText;
+                         // console.log(content.innerHTML)
+                         // console.log(XHR.responseXML)
+                         // console.log(content.innerHTML)
+                         // console.log(XHR)
+                         // console.log(image)
+                         // console.log(content)
                     }
                };
-               XHR.send("name=kunshi");
+               XHR.send("img=img/pien3.jpg");
           })
 
      </script>
