@@ -17,7 +17,7 @@ body {
     height: 50%;
 }
 
-.modal_contents img {
+.contents img {
     width: 200px;
     object-fit: contain;
     cursor: pointer;

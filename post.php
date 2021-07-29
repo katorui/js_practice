@@ -1,8 +1,7 @@
 <?php
 
 $data = [
-    'img' => $_POST['img'],
-    'name' => $_POST['name']
+    'img' => $_POST['img']
 ];
 // 宿題2 ブラウザに表示
 $json = json_encode(
