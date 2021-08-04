@@ -21,6 +21,8 @@ $images = [
     [ 'id' => 2, 'name' => "画像2", 'src' => 'img/boy_sad.png'],
     [ 'id' => 3, 'name' => "画像3", 'src' => 'img/megane.png'],
     [ 'id' => 4, 'name' => "画像4", 'src' => 'img/pien_woman.png'],
+    [ 'id' => 5, 'name' => "画像5", 'src' => 'img/pien_woman.png'],
+    [ 'id' => 6, 'name' => "画像6", 'src' => 'img/pien_woman.png']
 ];
 
 $json = json_encode(

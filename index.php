@@ -26,19 +26,15 @@
           <div id="div_id" class="human"></div>
           <div id="div_name" class="human"></div>
           <div id="div_age" class="human"></div>
-     </div
+     </div>
 
      <div id="img">画像に変更</div>
+     <div class="top_contents" id="top_contents">
+          <img src="" id="top_image" data-image="0">
+          <div class="contents_wrapper flex-container" id="contents_wrapper">
 
-     <div class="top_contents">
-          <img src="" id="top_content" data-image="0">
-     </div>
-          <div class="contents_wrapper">
-               <div class="contents">
-                    <img src="" data-image="1" id="first_content" class="thumbnail">
-               </div>
           </div>
-
+     </div>
      <script>
      window.onload = getItems();
      function getItems() {
@@ -51,34 +47,59 @@
           })
                .done(function (data) {
                     // 通信が成功したときの処理
-                    // console.log(data)
-                    data.forEach(function(a) {
-                         // console.log(a);
-                         console.log(a[0]);
-                         // console.log(a["id"]);
-                         // console.log(a["name"]);
-                         // console.log(a["src"]);
+                         // console.log(data);
+                         const top_contents = document.getElementById('top_contents');
+                         const contents_wrapper = document.getElementById('contents_wrapper');
+                         const top_image = document.getElementById('top_image');
+                              data.forEach(function(a) {
+                                   // console.log(a['src'])
+                                   const div_contents = document.createElement('div');
+                                   const img = document.createElement('img');
+                                   div_contents.classList.add('contents')
+                                   div_contents.classList.add('flex-item')
+                                   // div_contents.id = 'contents'
+                                   div_contents.append(img)
+                                   contents_wrapper.append(div_contents)
+                                   img.setAttribute('src',a['src']);
+                                   // console.log(a['src'])
+                                   console.log(div_contents)
 
-                         // 要素作成
-                         const div_contents_wrapper = document.createElement('div');
-                         const div_contents = document.createElement('div');
-                         const img = document.createElement('img');
+                              })
 
-                         // class属性追加
-                         div_contents_wrapper.classList.add('contents_wrapper')
-                         div_contents.classList.add('contents')
-                         // 子要素へ追加
-                         div_contents_wrapper.appendChild(div_contents);
-                         div_contents.appendChild(img);
-                         // 属性追加
-                         img.setAttribute("src", a["src"])
-                         img.setAttribute("data_image",a[""])
-                         img.setAttribute("id",a["id"])
-                         img.setAttribute("class","thumbnail")
-
-                         console.log(div_contents_wrapper)
-                         // console.log(div_contents)
-                    })
+                         // img.setAttribute('src',data[0]['src'])
+                         // const src = img.setAttribute('src');
+                              // data.forEach(function(a) {
+                              //      // 要素作成
+                                   // const div_contents_wrapper = document.createElement('div');
+                                   // const div_contents_id = document.createElement('id');
+                                   // div_contents_id.setAttribute("id","contents")
+                                   // console.log(div_contents_id)
+                              //      // class属性追加
+                              //      div_contents_wrapper.classList.add('contents_wrapper')
+                                   // div_contents.classList.add('contents')
+                              //      // 子要素へ追加
+                              //      div_contents_wrapper.appendChild(div_contents);
+                                   // div_contents.append(img);
+                                   // top_contents.append(div_contents);
+                                   // console.log(data)
+                                   // console.log(data[0]["id"])
+                                   data.forEach(function(a) {
+                                        // console.log(a)
+                                        // div_contents.classList.add('contents')
+                                        // div_contents.append(img);
+                                        // img.setAttribute("id","")
+                                        // img.setAttribute("src","")
+                                        // console.log(div_contents)
+                                        // const get_img = div_contents.getElementsByTagName('img')
+                                        // console.log(get_img)
+                                        // console.log(a["id"])
+                                        // console.log(a["src"])
+                                        // img.setAttribute("data_image",a["id"])
+                                        // img.setAttribute("id",a["id"])
+                                        // img.setAttribute("class","thumbnail")
+                                        // console.log(img)
+                                        // トップの子要素として追加
+                              })
                })
                .fail(function () {
                     // 通信が失敗したときの処理
@@ -90,13 +111,11 @@
                })
      }
 
-          const top_image = document.getElementById('top_content');
           const modal = document.querySelectorAll('.thumbnail');
           const prev = document.getElementById('prev');
           const next = document.getElementById('next');
           const modal_content = document.querySelectorAll('.modal_contents');
           // console.log(modal_content[3])
-
 
           modal.forEach(function (thumbnail) {
                thumbnail.addEventListener('click', function () {
